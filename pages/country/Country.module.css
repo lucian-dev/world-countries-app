@@ -7,16 +7,17 @@
   color: var(--primary-color);
 }
 
-.overview_panel img {
-  width: 100%;
-  border-radius: 4px;
-}
-
 .overview_panel {
   padding: 20px;
   border-radius: 8px;
   box-shadow: var(--box-shadow);
   background-color: var(--background-color-light);
+}
+
+.overview_image {
+  position: relative;
+  width: 100%;
+  height: 250px;
 }
 
 .overview_name {
@@ -80,8 +81,14 @@
   gap: 24px;
 }
 
-.details_panel_borders img {
+.details_panel_borders_country {
+  text-align: center;
+}
+
+.details_panel_borders_image {
+  position: relative;
   width: 100%;
+  height: 75px;
   border-radius: 4px;
 }
 
@@ -94,10 +101,6 @@
 .details_panel_borders_name:hover {
   text-decoration: none;
   color: var(--primary-color);
-}
-
-.details_panel_borders_country {
-  text-align: center;
 }
 
 .details_panel_borders_label {

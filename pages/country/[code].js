@@ -1,6 +1,7 @@
 import styles from "./Country.module.css";
 import Layout from "../../components/Layout/Layout";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Country({ country, borders }) {
   console.log(country);
@@ -12,7 +13,9 @@ export default function Country({ country, borders }) {
       <div className={styles.container}>
         <div className={styles.container_left}>
           <div className={styles.overview_panel}>
-            <img src={country.flag} alt={country.name}></img>
+            <div className={styles.overview_image}>
+              <Image src={country.flag} alt="Country Flag" layout="fill" />
+            </div>
             <h1 className={styles.overview_name}>{country.name}</h1>
             <div className={styles.overview_region}>{country.region}</div>
 
@@ -95,7 +98,13 @@ export default function Country({ country, borders }) {
                       className={styles.details_panel_borders_country}
                       key={border.name}
                     >
-                      <img src={border.flag} alt="Country Flag" />
+                      <div className={styles.details_panel_borders_image}>
+                        <Image
+                          src={border.flag}
+                          alt="Country Flag"
+                          layout="fill"
+                        />
+                      </div>
                       <Link href={`/country/${code}`}>
                         <a className={styles.details_panel_borders_name}>
                           {border.name}
