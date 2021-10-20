@@ -3,7 +3,7 @@ import Layout from "../../components/Layout/Layout";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function Country({ country, borders }) {
+export default function Country({ country, borders, weather }) {
   return (
     <Layout>
       <Link href="/">
@@ -52,6 +52,20 @@ export default function Country({ country, borders }) {
             </div>
 
             <div className={styles.details_panel_row}>
+              <div className={styles.details_panel_label}>Capital Weather</div>
+              <div className={styles.details_panel_value}>
+                <Image
+                  src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                  alt={weather.weather[0].description}
+                  width="50"
+                  height="50"
+                />
+                <span>{weather.main.temp.toFixed()}&deg;C</span>
+                {weather.weather[0].description}
+              </div>
+            </div>
+
+            <div className={styles.details_panel_row}>
               <div className={styles.details_panel_label}>Languages</div>
               <div className={styles.details_panel_value}>
                 {country.languages.map(({ name }) => name).join(", ")}
@@ -95,7 +109,6 @@ export default function Country({ country, borders }) {
                 {borders.length > 0
                   ? borders.map((border) => {
                       const code = border.alpha2Code.toLowerCase();
-                      console.log(border);
                       return (
                         <div
                           className={styles.details_panel_borders_country}
@@ -151,10 +164,23 @@ export const getStaticProps = async ({ params }) => {
     }
   }
 
+  const resCapitals = await fetch(
+    `https://restcountries.com/v2/capital/${country.capital}`
+  );
+  const capitals = await resCapitals.json();
+
+  const capital = capitals.map(({ capital }) => capital);
+
+  const resWeather = await fetch(
+    `https://api.openweathermap.org/data/2.5/weather?q=${capital}&appid=${process.env.API_KEY}&units=metric`
+  );
+  const weather = await resWeather.json();
+
   return {
     props: {
       country,
       borders,
+      weather,
     },
   };
 };
@@ -164,9 +190,10 @@ export const getStaticPaths = async () => {
   const countries = await res.json();
 
   const paths = countries.map((country) => ({
-    params: { code: country.alpha2Code.toLowerCase() },
+    params: {
+      code: country.alpha2Code.toLowerCase(),
+    },
   }));
-
   return {
     paths,
     fallback: false,
