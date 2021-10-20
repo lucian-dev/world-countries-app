@@ -90,28 +90,31 @@ export default function Country({ country, borders }) {
               </div>
 
               <div className={styles.details_panel_borders_container}>
-                {borders.map((border) => {
-                  const code = border.alpha2Code.toLowerCase();
-                  return (
-                    <div
-                      className={styles.details_panel_borders_country}
-                      key={border.name}
-                    >
-                      <div className={styles.details_panel_borders_image}>
-                        <Image
-                          src={border.flag}
-                          alt="Country Flag"
-                          layout="fill"
-                        />
-                      </div>
-                      <Link href={`/country/${code}`}>
-                        <a className={styles.details_panel_borders_name}>
-                          {border.name}
-                        </a>
-                      </Link>
-                    </div>
-                  );
-                })}
+                {borders.length > 0
+                  ? borders.map((border) => {
+                      const code = border.alpha2Code.toLowerCase();
+                      console.log(border);
+                      return (
+                        <div
+                          className={styles.details_panel_borders_country}
+                          key={border.name}
+                        >
+                          <div className={styles.details_panel_borders_image}>
+                            <Image
+                              src={border.flag}
+                              alt="Country Flag"
+                              layout="fill"
+                            />
+                          </div>
+                          <Link href={`/country/${code}`}>
+                            <a className={styles.details_panel_borders_name}>
+                              {border.name}
+                            </a>
+                          </Link>
+                        </div>
+                      );
+                    })
+                  : ""}
               </div>
             </div>
           </div>
@@ -126,10 +129,11 @@ export const getStaticProps = async ({ params }) => {
   const country = await res.json();
 
   let query = [];
-  for (const border of country.borders) {
-    query.push(border);
+  if (country.borders) {
+    for (const border of country.borders) {
+      query.push(border);
+    }
   }
-
   const resBorders = await fetch(
     `https://restcountries.com/v2/alpha?codes=${query.join(",")}`
   );
