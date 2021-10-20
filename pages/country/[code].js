@@ -54,14 +54,20 @@ export default function Country({ country, borders, weather }) {
             <div className={styles.details_panel_row}>
               <div className={styles.details_panel_label}>Capital Weather</div>
               <div className={styles.details_panel_value}>
-                <Image
-                  src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-                  alt={weather.weather[0].description}
-                  width="50"
-                  height="50"
-                />
-                <span>{weather.main.temp.toFixed()}&deg;C</span>
-                {weather.weather[0].description}
+                {country.capital ? (
+                  <>
+                    <Image
+                      src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                      alt={weather.weather[0].description}
+                      width="50"
+                      height="50"
+                    />
+                    <span>{weather.main.temp.toFixed()}&deg;C</span>
+                    {weather.weather[0].description}
+                  </>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
 
@@ -168,9 +174,11 @@ export const getStaticProps = async ({ params }) => {
     `https://restcountries.com/v2/capital/${country.capital}`
   );
   const capitals = await resCapitals.json();
-
-  const capital = capitals.map(({ capital }) => capital);
-
+  let capital = [];
+  if (capitals.length > 0) {
+    let item = capitals.map(({ capital }) => capital);
+    capital.push(item);
+  }
   const resWeather = await fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${capital}&appid=${process.env.API_KEY}&units=metric`
   );
