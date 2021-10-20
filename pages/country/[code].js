@@ -178,11 +178,19 @@ export const getStaticProps = async ({ params }) => {
   if (capitals.length > 0) {
     let item = capitals.map(({ capital }) => capital);
     capital.push(item);
+  } else {
+    capital.push("Bucharest");
   }
   const resWeather = await fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${capital}&appid=${process.env.API_KEY}&units=metric`
   );
   const weather = await resWeather.json();
+
+  if (!weather) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
