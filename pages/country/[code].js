@@ -102,7 +102,7 @@ export default function Country({ country, borders, weather }) {
             <div className={styles.details_panel_row}>
               <div className={styles.details_panel_label}>Timezone</div>
               <div className={styles.details_panel_value}>
-                {country.timezones}
+                {country.timezones.join(", ")}
               </div>
             </div>
 
@@ -181,7 +181,6 @@ export const getStaticProps = async ({ params }) => {
   } else {
     capital.push("Bucharest");
   }
-  console.log(capital);
   const resWeather = await fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${capital}&appid=${process.env.API_KEY}&units=metric`
   );
