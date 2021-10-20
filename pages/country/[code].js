@@ -186,7 +186,7 @@ export const getStaticProps = async ({ params }) => {
   );
   const weather = await resWeather.json();
 
-  if (!weather) {
+  if (!weather && !capitals && !data) {
     return {
       notFound: true,
     };
@@ -198,6 +198,7 @@ export const getStaticProps = async ({ params }) => {
       borders,
       weather,
     },
+    revalidate: 15,
   };
 };
 export const getStaticPaths = async () => {
