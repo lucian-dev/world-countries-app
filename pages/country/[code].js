@@ -171,16 +171,17 @@ export const getStaticProps = async ({ params }) => {
   }
 
   const resCapitals = await fetch(
-    `https://restcountries.com/v2/capital/${encodeURI(country.capital)}}`
+    `https://restcountries.com/v2/capital/${encodeURI(country.capital)}`
   );
   const capitals = await resCapitals.json();
   let capital = [];
   if (capitals.length > 0) {
-    let item = capitals.map(({ capital }) => capital);
+    let item = capitals.map(({ capital }) => encodeURI(capital));
     capital.push(item);
   } else {
     capital.push("Bucharest");
   }
+  console.log(capital);
   const resWeather = await fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${capital}&appid=${process.env.API_KEY}&units=metric`
   );
