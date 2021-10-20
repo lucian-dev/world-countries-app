@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function Country({ country, borders }) {
-  console.log(country);
   return (
     <Layout>
       <Link href="/">
@@ -135,7 +134,6 @@ export const getStaticProps = async ({ params }) => {
     `https://restcountries.com/v2/alpha?codes=${query.join(",")}`
   );
   const data = await resBorders.json();
-  console.log(data);
   let borders = [];
   if (data.length > 0) {
     for (let border of data) {
