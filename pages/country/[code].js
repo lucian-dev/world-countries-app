@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function Country({ country, borders, weather }) {
-  console.log(weather);
   return (
     <Layout>
       <Link href="/">
