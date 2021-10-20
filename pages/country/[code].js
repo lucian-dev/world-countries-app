@@ -61,7 +61,9 @@ export default function Country({ country, borders }) {
             <div className={styles.details_panel_row}>
               <div className={styles.details_panel_label}>Currencies</div>
               <div className={styles.details_panel_value}>
-                {country.currencies.map(({ name }) => name).join(", ")}
+                {country.currencies
+                  ? country.currencies.map(({ name }) => name).join(", ")
+                  : ""}
               </div>
             </div>
 
