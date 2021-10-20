@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function Country({ country, borders, weather }) {
+  console.log(weather);
   return (
     <Layout>
       <Link href="/">
@@ -54,7 +55,7 @@ export default function Country({ country, borders, weather }) {
             <div className={styles.details_panel_row}>
               <div className={styles.details_panel_label}>Capital Weather</div>
               <div className={styles.details_panel_value}>
-                {country.capital ? (
+                {country.capital && (
                   <>
                     <Image
                       src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
@@ -65,8 +66,6 @@ export default function Country({ country, borders, weather }) {
                     <span>{weather.main.temp.toFixed()}&deg;C</span>
                     {weather.weather[0].description}
                   </>
-                ) : (
-                  ""
                 )}
               </div>
             </div>
