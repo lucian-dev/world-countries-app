@@ -44,6 +44,7 @@
 
 .row {
   display: flex;
+  align-items: center;
   padding: 20px;
 
   text-align: center;
@@ -66,6 +67,12 @@
 .name {
   flex: 4;
   text-align: left;
+}
+
+.name span {
+  display: block;
+  font-size: 0.75rem;
+  margin-top: 5px;
 }
 
 .population {

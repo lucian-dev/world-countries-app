@@ -11,7 +11,7 @@ export default function Home({ countries }) {
 
   const filteredCountries = countries.filter(
     (country) =>
-      country.name.common.toLowerCase().includes(keyword) ||
+      country.name.toLowerCase().includes(keyword) ||
       country.region.toLowerCase().includes(keyword)
   );
 
@@ -26,7 +26,6 @@ export default function Home({ countries }) {
         <div className={styles.counts}>
           Found {filteredCountries.length} countries
         </div>
-
         <div className={styles.input}>
           <SearchInput
             placeholder="Filter by Name or Region"
@@ -34,14 +33,13 @@ export default function Home({ countries }) {
           />
         </div>
       </div>
-
       <CountriesTable countries={filteredCountries} />
     </Layout>
   );
 }
 
 export const getStaticProps = async () => {
-  const res = await fetch(`https://restcountries.com/v3.1/all`);
+  const res = await fetch(`https://restcountries.com/v2/all`);
   const countries = await res.json();
 
   return {

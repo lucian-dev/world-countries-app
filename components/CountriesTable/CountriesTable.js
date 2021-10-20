@@ -86,32 +86,35 @@ const CountriesTable = ({ countries }) => {
         </button>
       </div>
 
-      {orderedCountries.map((country) => (
-        <Link
-          href={`/country/${country.name.common.toLowerCase()}`}
-          key={country.cca2}
-        >
-          <a>
-            <div className={styles.row}>
-              <div className={styles.flag}>
-                <Image
-                  src={country.flags.png}
-                  alt="Country Flag"
-                  width="100"
-                  height="80"
-                />
+      {orderedCountries.map((country) => {
+        const code = country.alpha2Code.toLowerCase();
+        return (
+          <Link href={`/country/${code}`} key={country.alpha3Code}>
+            <a>
+              <div className={styles.row}>
+                <div className={styles.flag}>
+                  <Image
+                    src={country.flags.png}
+                    alt="Country Flag"
+                    width="100"
+                    height="80"
+                  />
+                </div>
+                <div className={styles.name}>
+                  {country.name}
+                  <span>...more details</span>
+                </div>
+
+                <div className={styles.population}>{country.population}</div>
+
+                <div className={styles.population}>{country.capital}</div>
+
+                <div className={styles.area}>{country.region || 0}</div>
               </div>
-              <div className={styles.name}>{country.name.common}</div>
-
-              <div className={styles.population}>{country.population}</div>
-
-              <div className={styles.population}>{country.capital}</div>
-
-              <div className={styles.area}>{country.region || 0}</div>
-            </div>
-          </a>
-        </Link>
-      ))}
+            </a>
+          </Link>
+        );
+      })}
     </div>
   );
 };
