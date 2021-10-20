@@ -171,12 +171,12 @@ export const getStaticProps = async ({ params }) => {
   }
 
   const resCapitals = await fetch(
-    `https://restcountries.com/v2/capital/${country.capital}`
+    `https://restcountries.com/v2/capital/${encodeURI(country.capital)}}`
   );
   const capitals = await resCapitals.json();
   let capital = [];
   if (capitals.length > 0) {
-    let item = capitals.map(({ capital }) => capital.replace(/ /g, "-"));
+    let item = capitals.map(({ capital }) => capital);
     capital.push(item);
   } else {
     capital.push("Bucharest");
