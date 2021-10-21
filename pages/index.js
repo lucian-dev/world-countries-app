@@ -1,8 +1,7 @@
-import styles from "../styles/Home.module.css";
+import styles from "@styles/Home.module.scss";
 import { useState } from "react";
-import Layout from "../components/Layout/Layout";
-import SearchInput from "../components/SearchInput/SearchInput";
-import CountriesTable from "../components/CountriesTable/CountriesTable";
+import SearchInput from "@components/SearchInput/SearchInput";
+import CountriesTable from "@components/CountriesTable/CountriesTable";
 
 export default function Home({ countries }) {
   const [keyword, setKeyword] = useState("");
@@ -19,7 +18,7 @@ export default function Home({ countries }) {
   };
 
   return (
-    <Layout>
+    <section>
       <div className={styles.inputContainer}>
         <div className={styles.counts}>
           Found {filteredCountries.length} countries
@@ -32,7 +31,7 @@ export default function Home({ countries }) {
         </div>
       </div>
       <CountriesTable countries={filteredCountries} />
-    </Layout>
+    </section>
   );
 }
 

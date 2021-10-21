@@ -3,26 +3,28 @@
   padding: 20px;
 }
 
+.heading_flag {
+  flex: 1;
+  margin-right: 15px;
+}
+
 .heading button {
+  font-family: var(--font-family);
   border: none;
   background-color: transparent;
   outline: none;
   cursor: pointer;
 }
 
-.heading_flag {
-  flex: 1;
-  margin-right: 16px;
-}
-
 .heading_name,
 .heading_population,
-.heading_area,
-.heading_gini {
+.heading_capital,
+.heading_region {
+  width: auto;
   flex: 4;
+  font-size: 1.4rem;
   color: var(--text-color-secondary);
-  font-weight: 500;
-
+  font-weight: 700;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,25 +35,23 @@
 }
 
 .heading_arrow {
-  color: var(--primary-color);
-
   display: flex;
   justify-content: center;
   align-items: center;
-
+  color: var(--text-color-secondary);
   margin-left: 2px;
 }
 
 .row {
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 25px 15px;
 
   text-align: center;
 
   background-color: var(--background-color-light);
   border-radius: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 15px;
 
   box-shadow: var(--box-shadow);
   font-weight: 500;
@@ -60,56 +60,31 @@
 }
 
 .row:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
 }
 
-.name {
-  flex: 4;
-  text-align: left;
-}
-
-.name span {
-  display: block;
-  font-size: 0.75rem;
-  margin-top: 5px;
-}
-
-.population {
-  flex: 4;
-}
-
-.area {
-  flex: 4;
-}
-
-.gini {
-  flex: 4;
-}
-
 .flag {
+  position: relative;
   flex: 1;
+  height: 50px;
   margin-right: 16px;
+  border: 1px solid transparentize(#b3c5cd, $amount: 0.8);
 }
 
-.flag img {
-  border-radius: 2px;
-  width: 100%;
+.name,
+.population,
+.capital,
+.region {
+  flex: 4;
+  color: var(--text-color);
 }
 
-@media screen and (max-width: 720px) {
-  .area,
-  .heading_area {
-    display: none;
-  }
-
-  .gini,
-  .heading_gini {
-    display: none;
-  }
-
-  .flag,
-  .heading_flag {
-    display: none;
+.name {
+  text-align: left;
+  span {
+    display: block;
+    font-size: 1rem;
+    margin-top: 5px;
   }
 }

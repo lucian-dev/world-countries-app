@@ -1,147 +1,21 @@
-import styles from "./Country.module.css";
-import Layout from "../../components/Layout/Layout";
+import styles from "@components/CountryPage/Country.module.scss";
 import Link from "next/link";
-import Image from "next/image";
+import CountryCard from "@components/CountryPage/CountryCard";
+import CountryDetails from "@components/CountryPage/CountryDetails";
+import CountryNews from "@components/CountryPage/CountryNews";
 
-export default function Country({ country, borders, weather }) {
+export default function Country({ country, borders, weather, news }) {
   return (
-    <Layout>
+    <section>
       <Link href="/">
         <a className={styles.back_link}>...back home</a>
       </Link>
       <div className={styles.container}>
-        <div className={styles.container_left}>
-          <div className={styles.overview_panel}>
-            <div className={styles.overview_image}>
-              <Image src={country.flag} alt="Country Flag" layout="fill" />
-            </div>
-            <h1 className={styles.overview_name}>{country.name}</h1>
-            <div className={styles.overview_region}>{country.region}</div>
-
-            <div className={styles.overview_numbers}>
-              <div className={styles.overview_population}>
-                <div className={styles.overview_value}>
-                  {country.population}
-                </div>
-                <div className={styles.overview_label}>Population</div>
-              </div>
-
-              <div className={styles.overview_area}>
-                <div className={styles.overview_value}>{country.area}</div>
-                <div className={styles.overview_label}>Area</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className={styles.container_right}>
-          <div className={styles.details_panel}>
-            <h4 className={styles.details_panel_heading}>Details</h4>
-
-            <div className={styles.details_panel_row}>
-              <div className={styles.details_panel_label}>Subregion</div>
-              <div className={styles.details_panel_value}>
-                {country.subregion}
-              </div>
-            </div>
-
-            <div className={styles.details_panel_row}>
-              <div className={styles.details_panel_label}>Capital</div>
-              <div className={styles.details_panel_value}>
-                {country.capital}
-              </div>
-            </div>
-
-            <div className={styles.details_panel_row}>
-              <div className={styles.details_panel_label}>Capital Weather</div>
-              <div className={styles.details_panel_value}>
-                {country.capital
-                  ? weather.name && (
-                      <>
-                        <Image
-                          src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-                          alt={weather.weather[0].description}
-                          width="50"
-                          height="50"
-                        />
-                        <span>{weather.main.temp.toFixed()}&deg;C</span>
-                        {weather.weather[0].description}
-                      </>
-                    )
-                  : ""}
-              </div>
-            </div>
-
-            <div className={styles.details_panel_row}>
-              <div className={styles.details_panel_label}>Languages</div>
-              <div className={styles.details_panel_value}>
-                {country.languages.map(({ name }) => name).join(", ")}
-              </div>
-            </div>
-
-            <div className={styles.details_panel_row}>
-              <div className={styles.details_panel_label}>Currencies</div>
-              <div className={styles.details_panel_value}>
-                {country.currencies
-                  ? country.currencies.map(({ name }) => name).join(", ")
-                  : ""}
-              </div>
-            </div>
-
-            <div className={styles.details_panel_row}>
-              <div className={styles.details_panel_label}>Native name</div>
-              <div className={styles.details_panel_value}>
-                {country.nativeName}
-              </div>
-            </div>
-
-            <div className={styles.details_panel_row}>
-              <div className={styles.details_panel_label}>Gini</div>
-              <div className={styles.details_panel_value}>{country.gini} %</div>
-            </div>
-
-            <div className={styles.details_panel_row}>
-              <div className={styles.details_panel_label}>Timezone</div>
-              <div className={styles.details_panel_value}>
-                {country.timezones.join(", ")}
-              </div>
-            </div>
-
-            <div className={styles.details_panel_borders}>
-              <div className={styles.details_panel_borders_label}>
-                Neighbouring Countries
-              </div>
-
-              <div className={styles.details_panel_borders_container}>
-                {borders.length > 0
-                  ? borders.map((border) => {
-                      const code = border.alpha2Code.toLowerCase();
-                      return (
-                        <div
-                          className={styles.details_panel_borders_country}
-                          key={border.name}
-                        >
-                          <div className={styles.details_panel_borders_image}>
-                            <Image
-                              src={border.flag}
-                              alt="Country Flag"
-                              layout="fill"
-                            />
-                          </div>
-                          <Link href={`/country/${code}`}>
-                            <a className={styles.details_panel_borders_name}>
-                              {border.name}
-                            </a>
-                          </Link>
-                        </div>
-                      );
-                    })
-                  : ""}
-              </div>
-            </div>
-          </div>
-        </div>
+        <CountryCard countrycard={country} />
+        <CountryDetails details={country} weather={weather} borders={borders} />
+        <CountryNews news={news} name={country.name} />
       </div>
-    </Layout>
+    </section>
   );
 }
 
@@ -186,7 +60,13 @@ export const getStaticProps = async ({ params }) => {
   );
   const weather = await resWeather.json();
 
-  if (!weather && !capitals && !data) {
+  const resNews = await fetch(
+    `https://newsapi.org/v2/top-headlines?country=${country.alpha2Code}&apiKey=${process.env.API_KEY_NEWS}`
+  );
+
+  const news = await resNews.json();
+
+  if (!weather && !capitals && !data && !news) {
     return {
       notFound: true,
     };
@@ -197,8 +77,9 @@ export const getStaticProps = async ({ params }) => {
       country,
       borders,
       weather,
+      news,
     },
-    revalidate: 15,
+    revalidate: 10,
   };
 };
 export const getStaticPaths = async () => {

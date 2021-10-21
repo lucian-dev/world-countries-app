@@ -1,25 +1,21 @@
-import Head from "next/head";
 import Link from "next/link";
-import styles from "./Layout.module.css";
+import styles from "./Layout.module.scss";
 
-const Layout = ({ children, title = "World Countries" }) => {
+const Layout = ({ children }) => {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>{title}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+    <>
       <header className={styles.header}>
         <Link href="/">
-          <a>World Countries</a>
+          <a>World Countries App</a>
         </Link>
       </header>
 
-      <main className={styles.main}>{children}</main>
+      <main className={styles.main}>
+        <div className={styles.container}>{children}</div>
+      </main>
 
       <footer className={styles.footer}>@Lucian-DEV</footer>
-    </div>
+    </>
   );
 };
 

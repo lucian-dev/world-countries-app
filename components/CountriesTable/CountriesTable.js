@@ -1,11 +1,8 @@
+import styles from "./CountriesTable.module.scss";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  KeyboardArrowDownRounded,
-  KeyboardArrowUpRounded,
-} from "@material-ui/icons";
+import { FaSortAmountUpAlt, FaSortAmountDownAlt } from "react-icons/fa";
 import { useState } from "react";
-import styles from "./CountriesTable.module.css";
 
 const orderBy = (countries, value, direction) => {
   if (direction === "asc") {
@@ -27,13 +24,13 @@ const SortArrow = ({ direction }) => {
   if (direction === "desc") {
     return (
       <div className={styles.heading_arrow}>
-        <KeyboardArrowDownRounded color="inherit" />
+        <FaSortAmountDownAlt />
       </div>
     );
   } else {
     return (
       <div className={styles.heading_arrow}>
-        <KeyboardArrowUpRounded color="inherit" />
+        <FaSortAmountUpAlt />
       </div>
     );
   }
@@ -65,8 +62,12 @@ const CountriesTable = ({ countries }) => {
       <div className={styles.heading}>
         <div className={styles.heading_flag}></div>
 
-        <button className={styles.heading_name}>
+        <button
+          className={styles.heading_name}
+          onClick={() => setValueAndDirection("name")}
+        >
           <div>Name</div>
+          {value === "name" && <SortArrow direction={direction} />}
         </button>
 
         <button
@@ -78,11 +79,16 @@ const CountriesTable = ({ countries }) => {
           {value === "population" && <SortArrow direction={direction} />}
         </button>
 
-        <button className={styles.heading_area}>
+        <div className={styles.heading_capital}>
           <div>Capital</div>
-        </button>
-        <button className={styles.heading_area}>
+        </div>
+
+        <button
+          className={styles.heading_region}
+          onClick={() => setValueAndDirection("region")}
+        >
           <div>Region</div>
+          {value === "region" && <SortArrow direction={direction} />}
         </button>
       </div>
 
@@ -95,9 +101,8 @@ const CountriesTable = ({ countries }) => {
                 <div className={styles.flag}>
                   <Image
                     src={country.flags.png}
-                    alt="Country Flag"
-                    width="100"
-                    height="80"
+                    alt={`${country.name.toLowerCase()}-flag`}
+                    layout="fill"
                   />
                 </div>
                 <div className={styles.name}>
@@ -107,9 +112,9 @@ const CountriesTable = ({ countries }) => {
 
                 <div className={styles.population}>{country.population}</div>
 
-                <div className={styles.population}>{country.capital}</div>
+                <div className={styles.capital}>{country.capital}</div>
 
-                <div className={styles.area}>{country.region || 0}</div>
+                <div className={styles.region}>{country.region || 0}</div>
               </div>
             </a>
           </Link>

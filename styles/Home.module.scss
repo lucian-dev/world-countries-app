@@ -1,0 +1,20 @@
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40px;
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+    .input {
+      flex: 1;
+    }
+  }
+  .counts {
+    color: var(--text-color-secondary);
+    margin-bottom: 15px;
+    @media (min-width: 768px) {
+      flex: 1;
+      margin-bottom: 0;
+    }
+  }
+}
