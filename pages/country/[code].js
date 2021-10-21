@@ -79,7 +79,7 @@ export const getStaticProps = async ({ params }) => {
       weather,
       news,
     },
-    revalidate: 10,
+    revalidate: 15,
   };
 };
 export const getStaticPaths = async () => {
@@ -94,6 +94,6 @@ export const getStaticPaths = async () => {
   }));
   return {
     paths,
-    fallback: true,
+    fallback: false,
   };
 };
