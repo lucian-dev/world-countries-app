@@ -5,7 +5,6 @@ import CountryDetails from "@components/CountryPage/CountryDetails";
 import CountryNews from "@components/CountryPage/CountryNews";
 
 export default function Country({ country, borders, weather, news }) {
-  console.log(news);
   return (
     <section>
       <Link href="/">
@@ -62,7 +61,7 @@ export const getStaticProps = async ({ params }) => {
   const weather = await resWeather.json();
 
   const resNews = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=${country.alpha2Code}&apiKey=${process.env.API_KEY_NEWS}`
+    `https://newsdata.io/api/1/news?apikey=${process.env.API_KEY_NEWS}&country=${country.alpha2Code}`
   );
 
   const news = await resNews.json();

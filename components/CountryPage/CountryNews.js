@@ -7,11 +7,11 @@ export default function CountryNews({ news, name }) {
     <div className={styles.container_right}>
       <div className={styles.container_panel}>
         <h3>Latest news from {name}</h3>
-        {news.articles
-          ? news.articles.slice(0, 2).map((article, index) => {
+        {news.results.length > 0
+          ? news.results.slice(0, 2).map((article, index) => {
               return (
                 <div className={styles.article} key={index}>
-                  <Link href={article.url}>
+                  <Link href={article.link}>
                     <a target="_blank">
                       <div className={styles.article_image}>
                         <div className={styles.article_icon}>
@@ -19,8 +19,8 @@ export default function CountryNews({ news, name }) {
                         </div>
                         <img
                           src={
-                            article.urlToImage
-                              ? article.urlToImage
+                            article.image_url
+                              ? article.image_url
                               : "/thumbnail-default.jpg"
                           }
                           alt={article.title}
@@ -28,7 +28,7 @@ export default function CountryNews({ news, name }) {
                       </div>
                       <div className={styles.article_meta}>
                         <h4>{`${article.title.substring(0, 50)}...`}</h4>
-                        <span>Source: {article.source.name}</span>
+                        <span>Source: {article.source_id}</span>
                       </div>
                     </a>
                   </Link>
