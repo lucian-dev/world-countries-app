@@ -5,6 +5,7 @@ import CountryDetails from "@components/CountryPage/CountryDetails";
 import CountryNews from "@components/CountryPage/CountryNews";
 
 export default function Country({ country, borders, weather, news }) {
+  console.log(news);
   return (
     <section>
       <Link href="/">
@@ -94,6 +95,6 @@ export const getStaticPaths = async () => {
   }));
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 };
