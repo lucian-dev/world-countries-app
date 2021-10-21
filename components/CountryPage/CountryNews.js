@@ -7,7 +7,7 @@ export default function CountryNews({ news, name }) {
     <div className={styles.container_right}>
       <div className={styles.container_panel}>
         <h3>Latest news from {name}</h3>
-        {news & (news.articles.length > 0)
+        {news.articles
           ? news.articles.slice(0, 2).map((article, index) => {
               return (
                 <div className={styles.article} key={index}>
