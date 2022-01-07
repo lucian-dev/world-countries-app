@@ -3,3 +3,12 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## Getting Started
 
 https://world-countries-app.vercel.app
+
+Stack:
+
+- NextJS
+- API
+  -- restcountries.com
+  -- openweathermap.org
+  -- newsdata.io
+- Vercel
